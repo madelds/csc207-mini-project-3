@@ -1,27 +1,26 @@
 /**
- * Creates a new block that is the horizontally flipped of an input block.
+ * Creates a new block that is the vertically flipped of an input block.
  * 
  * @author Madel Sibal
  * @version 1.2 of February 2019
  */
 
- 
-public class HorizontallyFlipped implements TextBlock {
+public class VerticallyFlipped implements TextBlock {
+  private TextBlock originalBlock;
   // +--------+------------------------------------------------------------
   // | Fields |
   // +--------+
 
+
+  /**
+   * Build a new block by vertically flipping the original block.
+   */
+  public VerticallyFlipped(TextBlock originalBlock) {
   /**
    * The original block.
    */
-  private TextBlock originalBlock;
-
-  /**
-   * Build a new block by horizontally flipping the original block.
-   */
-  public HorizontallyFlipped(TextBlock originalBlock) {
     this.originalBlock = originalBlock;
-  } // HorizontallyFlipped
+  } // VerticallyFlipped
 
   // +---------+-----------------------------------------------------------
   // | Methods |
@@ -34,13 +33,17 @@ public class HorizontallyFlipped implements TextBlock {
    * @exception Exception if the precondition is not met
    */
   public String row(int i) throws Exception {
-    String originalRow = originalBlock.row(i);
+    int numRows = originalBlock.height();
     
-    // Reverse the characters in the row to achieve horizontal flipping
-    String flippedRow = new StringBuilder(originalRow).reverse().toString();
-    
-    return flippedRow;
+    // Ensure that the row number is within a valid range
+    if (i >= 0 && i < numRows) {
+      // Get the corresponding row from the original block in reverse order
+      return originalBlock.row(numRows - 1 - i);
+    } else {
+      throw new Exception("Invalid row number: " + i);
+    }
   }
+
   /**
    * Determine how many rows are in the block.
    */
@@ -54,4 +57,4 @@ public class HorizontallyFlipped implements TextBlock {
   public int width() {
     return originalBlock.width(); // The width remains the same after flipping
   } // width()
-} // class HorizontallyFlipped
+} // class VerticallyFlipped
