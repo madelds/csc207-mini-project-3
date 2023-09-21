@@ -4,7 +4,6 @@
  * @author Madel Sibal
  * @version 1.2 of February 2019
  */
-
  
 public class HorizontallyFlipped implements TextBlock {
   // +--------+------------------------------------------------------------
