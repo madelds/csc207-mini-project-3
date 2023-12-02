@@ -4,18 +4,16 @@
  * @author Madel Sibal
  * @version 1.2 of February 2019
  */
-public class Centered implements TextBlock {
-  // +--------+------------------------------------------------------------
-  // | Fields |
-  // +--------+
 
-  /**
-   * The original block.
-   */
-  private TextBlock originalBlock;
-  /**
-   * The width of the new block.
-   */
+public class Centered implements TextBlock {
+  // +---------+-----------------------------------------------------------
+  // | Fields  |
+  // +---------+
+
+  // The text block to be centered
+  private TextBlock block;
+
+  // The width of the centered block
   private int width;
 
   // +--------------+------------------------------------------------------
@@ -23,10 +21,10 @@ public class Centered implements TextBlock {
   // +--------------+
 
   /**
-   * Center a block within a given width.
+   * Create a new centered block.
    */
-  public Centered(TextBlock originalBlock, int width) {
-    this.originalBlock = originalBlock;
+  public Centered(TextBlock block, int width) {
+    this.block = block;
     this.width = width;
   } // Centered(TextBlock, int)
 
@@ -35,40 +33,44 @@ public class Centered implements TextBlock {
   // +---------+
 
   /**
-   * Get one row from the block.
+   * Get one row from the centered block.
    * 
-   * @pre 0 <= i < this.height()
-   * @exception Exception if the precondition is not met
+   * @pre i < this.height()
+   * @exception Exception if the row number is invalid.
    */
   public String row(int i) throws Exception {
-    String originalRow = originalBlock.row(i);
-    int originalWidth = originalRow.length();
-    
-    // Calculate the number of spaces to add before and after the row to center it
-    int spacesToAdd = (width - originalWidth) / 2;
-    
-    // Create a centered row with spaces added
-    String centeredRow = TBUtils.spaces(spacesToAdd) + originalRow + TBUtils.spaces(spacesToAdd);
-    
-    // If there are extra spaces due to odd width or alignment, add one more space at the end
-    if ((width - originalWidth) % 2 == 1) {
-      centeredRow += " ";
-    } 
-    
-    return centeredRow;
+    int offset = calculateOffset();
+    int blockWidth = block.width();
+
+    if (i < block.height()) {
+      // Center the row by adding leading spaces
+      String rowContent = block.row(i);
+      return " ".repeat(offset) + rowContent + " ".repeat(Math.max(0, width - blockWidth - offset));
+    } else {
+      throw new Exception("Invalid row number");
+    }
   } // row(int)
 
   /**
-   * Determine how many rows are in the block.
+   * Determine how many rows are in the centered block.
    */
   public int height() {
-    return originalBlock.height();
+    return block.height();
   } // height()
 
   /**
-   * Determine how many columns are in the block.
+   * Determine how many columns are in the centered block.
    */
   public int width() {
-    return width; // The width of the centered block is the specified width
+    return width;
   } // width()
+
+  /**
+   * Calculate the offset needed for centering.
+   */
+  private int calculateOffset() {
+    int blockWidth = block.width();
+    return Math.max(0, (width - blockWidth) / 2);
+  } // calculateOffset()
+
 } // class Centered

@@ -38,22 +38,9 @@ public class TextBlockTests {
         };
     }
 
-  /**
-   * A test that should succeed for the procedure in Centered.java.
-   */
-    @Test
-    void testCenteredBlockWithWidthLessThanOriginal() throws Exception {
-        // Create a centered block with a width less than the original block's width
-        Centered centeredBlock = new Centered(originalBlock, 4);
-
-        // In this case, no centering should occur, so the rows should remain the same
-        assertEquals("Row 1", centeredBlock.row(0));
-        assertEquals("Row 2", centeredBlock.row(1));
-    }
-
-  /**
-   * A test that should succeed for the procedure in Truncated.java.
-   */
+    /**
+     * A test that should succeed for the procedure in Truncated.java.
+     */
     @Test
     void testTruncatedLongRow() throws Exception {
         // Create a truncated block with a maximum width of 10
@@ -62,9 +49,9 @@ public class TextBlockTests {
         assertEquals("Row 1", truncatedBlock.row(0));
         assertEquals("Row 2", truncatedBlock.row(1));
     }
-  /**
-   * Another  test that should succeed for the procedure in Truncated.java.
-   */
+    /**
+     * Another  test that should succeed for the procedure in Truncated.java.
+     */
     @Test
     void testNoTruncationNeeded() throws Exception {
         // Create a truncated block with a maximum width larger than the original block's width
@@ -74,9 +61,9 @@ public class TextBlockTests {
         assertEquals("Row 2", truncatedBlock.row(1));
     }
 
-  /**
-   * A test that should succeed for the procedure in RightJustified.java.
-   */
+    /**
+     * A test that should succeed for the procedure in RightJustified.java.
+     */
     @Test
     void testRightJustifiedRows() throws Exception {
         // Create a right-justified block with a width of 10
@@ -86,9 +73,9 @@ public class TextBlockTests {
         assertEquals("     Row 2", justifiedBlock.row(1));
     }
 
-  /**
-   * A test that should succeed for the procedure in HorizontallyFlipped.java.
-   */
+    /**
+     * A test that should succeed for the procedure in HorizontallyFlipped.java.
+     */
     @Test
     void testHorizontallyFlippedRows() throws Exception {
         // Create a horizontally flipped block
@@ -98,9 +85,9 @@ public class TextBlockTests {
         assertEquals("2 woR", flippedBlock.row(1));
     }
 
-  /**
-   * A test that should succeed for the procedure in VerticallyFlipped.java.
-   */
+    /**
+     * A test that should succeed for the procedure in VerticallyFlipped.java.
+     */
     @Test
     void testVerticallyFlippedRows() throws Exception {
         // Create a vertically flipped block
@@ -108,6 +95,28 @@ public class TextBlockTests {
 
         assertEquals("Row 2", flippedBlock.row(0));
         assertEquals("Row 1", flippedBlock.row(1));
+    }
+
+    /**
+     * A test that should succeed for the procedure in Centered.java.
+     */
+    @Test
+    void testCenteredBlockWithWidthLessThanOriginal() throws Exception {
+        Centered centeredBlock = new Centered(originalBlock, 4);
+
+        assertEquals("Row 1", centeredBlock.row(0));
+        assertEquals("Row 2", centeredBlock.row(1));
+    }
+
+    /**
+     * A test that should succeed for the procedure in Centered.java.
+     */
+    @Test
+    void testCenteredBlockWithWidthLessThanOriginalBlockWidth() throws Exception {
+        Centered centeredBlock = new Centered(originalBlock, 5);
+
+        assertEquals("Row 1", centeredBlock.row(0));
+        assertEquals("Row 2", centeredBlock.row(1));
     }
 
     /**
@@ -142,7 +151,5 @@ public class TextBlockTests {
 
         assertTrue(TBUtils.eq(block1, block2));
     }
-
-
-
+    
 }
