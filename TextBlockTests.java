@@ -120,6 +120,84 @@ public class TextBlockTests {
     }
 
     /**
+     * Test for Centered.java when used as a parameter to Truncated.java.
+     * Centered block is truncated to a width smaller than the original block's width.
+     */
+    @Test
+    void testCenteredInsideTruncated() throws Exception {
+        Centered centeredBlock = new Centered(originalBlock, 8);
+        Truncated truncatedBlock = new Truncated(centeredBlock, 5);
+
+        assertEquals("  Row ", truncatedBlock.row(0));
+        assertEquals("   Ro", truncatedBlock.row(1));
+}
+
+    /**
+     * Test for RightJustified.java when used as a parameter to VerticallyFlipped.java.
+     * Original block is right-justified and then flipped vertically.
+     */
+    @Test
+    void testRightJustifiedThenVerticallyFlipped() throws Exception {
+        RightJustified justifiedBlock = new RightJustified(originalBlock, 10);
+        VerticallyFlipped flippedBlock = new VerticallyFlipped(justifiedBlock);
+
+        assertEquals("  Row 2", flippedBlock.row(0));
+        assertEquals("  Row 1", flippedBlock.row(1));
+    }
+
+    /**
+     * Test for HorizontallyFlipped.java when used as a parameter to Centered.java.
+     * Original block is horizontally flipped and then centered.
+     */
+    @Test
+    void testHorizontallyFlippedThenCentered() throws Exception {
+        HorizontallyFlipped flippedBlock = new HorizontallyFlipped(originalBlock);
+        Centered centeredBlock = new Centered(flippedBlock, 12);
+
+        assertEquals("   1 woR   ", centeredBlock.row(0));
+        assertEquals("   2 woR   ", centeredBlock.row(1));
+    }
+
+    /**
+     * Test for VerticallyFlipped.java when used as a parameter to HorizontallyFlipped.java.
+     * Original block is vertically flipped and then horizontally flipped.
+     */
+    @Test
+    void testVerticallyFlippedThenHorizontallyFlipped() throws Exception {
+        VerticallyFlipped verticallyFlippedBlock = new VerticallyFlipped(originalBlock);
+        HorizontallyFlipped flippedBlock = new HorizontallyFlipped(verticallyFlippedBlock);
+
+        assertEquals("1 woR", flippedBlock.row(0));
+        assertEquals("2 woR", flippedBlock.row(1));
+    }
+
+    /**
+     * Test for Truncated.java with an empty block as the original block.
+     */
+    @Test
+    void testTruncatedWithEmptyBlock() throws Exception {
+        TextBlock emptyBlock = new TextBlock() {
+            public String row(int i) throws Exception {
+                throw new Exception("Invalid row");
+            }
+
+            public int height() {
+                return 0;
+            }
+
+            public int width() {
+                return 0;
+            }
+        };
+
+        Truncated truncatedBlock = new Truncated(emptyBlock, 5);
+
+        assertEquals("", truncatedBlock.row(0));
+        assertEquals("", truncatedBlock.row(1));
+    }
+
+
+    /**
      * A test for the `equal` method in TBUtils.
      */
     @Test

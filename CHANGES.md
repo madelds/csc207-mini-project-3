@@ -9,6 +9,8 @@ The following changes were made to my Mini Project 3 submission in terms of my f
 (b) Works when the width given is less than the width of the parameter block.
 
 3: Added the following test cases:
-(a) Test the new added functionality of Centered.java as reflected in the text above.
+(a) Tests that check the new added functionality of Centered.java as reflected in the text above.
+(b) Tests for each of the different kinds of text blocks as parameters to other text blocks (or themselves).
+(c) Tests that include interesting edge cases, such as empty blocks.
 
 4: I added a CHANGES.md file to reflect the changes I made for this revision.
