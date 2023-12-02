@@ -6,71 +6,55 @@
  */
 
 public class Centered implements TextBlock {
-  // +---------+-----------------------------------------------------------
-  // | Fields  |
-  // +---------+
+  // +--------+------------------------------------------------------------
+  // | Fields |
+  // +--------+
 
-  // The text block to be centered
-  private TextBlock block;
-
-  // The width of the centered block
-  private int width;
+  private final TextBlock originalBlock;
+  private final int width;
 
   // +--------------+------------------------------------------------------
   // | Constructors |
   // +--------------+
 
-  /**
-   * Create a new centered block.
-   */
-  public Centered(TextBlock block, int width) {
-    this.block = block;
+  public Centered(TextBlock originalBlock, int width) {
+    this.originalBlock = originalBlock;
     this.width = width;
-  } // Centered(TextBlock, int)
+  }
 
   // +---------+-----------------------------------------------------------
   // | Methods |
   // +---------+
 
-  /**
-   * Get one row from the centered block.
-   * 
-   * @pre i < this.height()
-   * @exception Exception if the row number is invalid.
-   */
   public String row(int i) throws Exception {
-    int offset = calculateOffset();
-    int blockWidth = block.width();
+    if (i < 0 || i >= this.height()) {
+      throw new IndexOutOfBoundsException("Invalid row index: " + i);
+    }
 
-    if (i < block.height()) {
-      // Center the row by adding leading spaces
-      String rowContent = block.row(i);
-      return " ".repeat(offset) + rowContent + " ".repeat(Math.max(0, width - blockWidth - offset));
+    String originalRow = originalBlock.row(i);
+    int originalWidth = originalRow.length();
+    
+    if (originalWidth >= width) {
+      return originalRow;
+
     } else {
-      throw new Exception("Invalid row number");
+      int spacesToAdd = (width - originalWidth) / 2;
+      
+      String centeredRow = TBUtils.spaces(spacesToAdd) + originalRow + TBUtils.spaces(spacesToAdd);
+      
+      if ((width - originalWidth) % 2 == 1) {
+        centeredRow += " ";
+      } 
+      
+      return centeredRow;
     }
   } // row(int)
 
-  /**
-   * Determine how many rows are in the centered block.
-   */
   public int height() {
-    return block.height();
+    return originalBlock.height();
   } // height()
 
-  /**
-   * Determine how many columns are in the centered block.
-   */
   public int width() {
     return width;
   } // width()
-
-  /**
-   * Calculate the offset needed for centering.
-   */
-  private int calculateOffset() {
-    int blockWidth = block.width();
-    return Math.max(0, (width - blockWidth) / 2);
-  } // calculateOffset()
-
-} // class Centered
+}

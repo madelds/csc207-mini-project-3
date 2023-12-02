@@ -25,7 +25,7 @@ public class Truncated implements TextBlock {
   public Truncated(TextBlock originalBlock, int maxWidth) {
     this.originalBlock = originalBlock;
     this.maxWidth = maxWidth;
-  } // Truncated
+  } // Truncated(TextBlock, int)
 
   // +---------+-----------------------------------------------------------
   // | Methods |
@@ -33,9 +33,6 @@ public class Truncated implements TextBlock {
 
   /**
    * Get one row from the block.
-   * 
-   * @pre 0 <= i < this.height()
-   * @exception Exception if the precondition is not met
    */
   public String row(int i) throws Exception {
     String originalRow = originalBlock.row(i);
